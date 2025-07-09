@@ -1,16 +1,22 @@
 # time_trails
 
-A new Flutter project.
+💡 Concept:
 
-## Getting Started
+Showcases historical stories, landmarks, and photos as users walk through their city. Use location + AR to immerse users in the past.
+🔧 GMP Features:
 
-This project is a starting point for a Flutter application.
+    Maps SDK + Street View API
 
-A few resources to get you started if this is your first Flutter project:
+    Geocoding API
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+    Custom Maps styling
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+    AR with Flutter plugins (like ARKit/ARCore bridge)
+
+🔥 Why it’s Relevant for the hackathon:
+
+    Engages tourism and education sectors
+
+    Strong visual demo potential
+
+    Appeals to cultural and historic preservation themes
