@@ -1,4 +1,4 @@
-# time_trails
+# TimeTrails
 
 💡 Concept:
 
