@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:time_trails/circle_painter.dart';
+import 'package:time_trails/helpers/circle_painter.dart';
 
 class CircleWidget extends StatelessWidget {
   const CircleWidget({super.key, required this.circleSize});
@@ -12,8 +12,8 @@ class CircleWidget extends StatelessWidget {
       size: circleSize,
       painter: CirclePainter(
         circleSize: circleSize,
-        color1: Color(0xFF37B6E9),
-        color2: Color(0xFF4B4CED),
+        color1: Color(0xFF34C8E8),
+        color2: Color(0xFF4E4AF2),
       ),
     );
   }
