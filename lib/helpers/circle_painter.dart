@@ -20,11 +20,20 @@ class CirclePainter extends CustomPainter {
       radius: circleSize.width / 2,
     );
 
+    final Gradient radialBackgroundGradient = RadialGradient(
+      colors: [
+        color1.withValues(alpha: 0.4),
+        color2.withValues(alpha: 0.05),
+        Colors.transparent,
+      ],
+      stops: [0.0, 0.7, 1.0],
+    );
+
     final Gradient backgroundGradient = LinearGradient(
-      colors: [color1, color2],
+      colors: [color1.withValues(alpha: 0.5), color2.withValues(alpha: 0.5)],
       stops: [0, 1],
       begin: Alignment.topLeft,
-      end: Alignment.bottomRight
+      end: Alignment.bottomRight,
     );
 
     //cascade operator ..
@@ -32,11 +41,15 @@ class CirclePainter extends CustomPainter {
     final cirlcePaint = Paint()
       ..shader = backgroundGradient.createShader(rect)
       ..style = PaintingStyle.fill;
-    
+
+    final circleRadialPaint = Paint()
+      ..shader = radialBackgroundGradient.createShader(rect)
+      ..style = PaintingStyle.fill;
+
     canvas.drawCircle(
       Offset(circleSize.width / 2, circleSize.height / 2),
       circleSize.width / 2,
-      cirlcePaint,
+      circleRadialPaint,
     );
   }
 

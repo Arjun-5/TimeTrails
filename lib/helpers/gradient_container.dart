@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class GradientContainer extends StatelessWidget {
-  const GradientContainer({super.key, required this.color1, required this.color2, required this.startAlignment, required this.endAlignment});
+  const GradientContainer({super.key, required this.color1, required this.color2, required this.startAlignment, required this.endAlignment, this.child});
 
   final Color color1;
 
@@ -10,6 +10,8 @@ class GradientContainer extends StatelessWidget {
   final Alignment startAlignment;
 
   final Alignment endAlignment;
+
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,7 @@ class GradientContainer extends StatelessWidget {
           end: endAlignment,
         ),
       ),
+      child: child,
     );
   }
 }
