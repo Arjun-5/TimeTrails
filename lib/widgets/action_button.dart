@@ -12,11 +12,11 @@ class ActionButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        backgroundColor: Colors.limeAccent,
+        backgroundColor: Colors.blueAccent,
         foregroundColor: Colors.black,
         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 16),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-        shadowColor: Colors.limeAccent,
+        shadowColor: Colors.tealAccent,
         elevation: 12,
       ),
       child: StylizedText(
@@ -26,7 +26,7 @@ class ActionButton extends StatelessWidget {
           fontSize: 20,
           fontWeight: FontWeight.bold,
           letterSpacing: 1.2,
-          color: Colors.white70,
+          color: Colors.black,
         ),
       ),
     );

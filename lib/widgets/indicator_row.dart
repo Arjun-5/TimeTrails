@@ -41,7 +41,7 @@ class IndicatorRow extends StatelessWidget {
                   dotHeight: 8,
                   dotWidth: 8,
                   spacing: 8,
-                  activeDotColor: Colors.limeAccent,
+                  activeDotColor: Colors.redAccent,
                   dotColor: Colors.white24,
                 ),
                 onDotClicked: onDotClicked,

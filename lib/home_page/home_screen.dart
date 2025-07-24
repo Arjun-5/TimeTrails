@@ -39,6 +39,8 @@ class HomeScreen extends StatelessWidget {
                     filter: ImageFilter.blur(sigmaX: 10.0, sigmaY: 10.0),
                     child: CircleWidget(
                       circleSize: Size(circleDiameter, circleDiameter),
+                      circleColor1: Color(0xFF09FBD3),
+                      circleColor2: Color.fromARGB(255, 1, 147, 123),
                     ),
                   ),
                 ),

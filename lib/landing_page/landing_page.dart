@@ -43,29 +43,39 @@ class _LandingPageContentState extends State<LandingPageContent> {
         body: LayoutBuilder(
           builder: (context, constraints) {
             final size = MediaQuery.of(context).size;
-            
+
             final width = size.width;
 
-            final double circleDiameter = width * 1.5;
+            final height = size.height;
 
-            final left = circleDiameter * -0.16;
-            final top = circleDiameter * -0.3;
+            final double circleDiameter = width * 1.2;
 
             return Stack(
               children: [
                 SizedBox.expand(
                   child: GradientContainer(
-                    color1: const Color(0xFF353F54),
-                    color2: const Color(0xFF222834),
+                    color1: const Color.fromARGB(255, 26, 26, 26),
+                    color2: const Color.fromARGB(255, 13, 13, 13),
                     startAlignment: Alignment.topLeft,
                     endAlignment: Alignment.bottomRight,
                   ),
                 ),
                 Positioned(
-                  left: left,
-                  top: top,
+                  left: circleDiameter * -0.35,
+                  top: circleDiameter * -0.1,
                   child: CircleWidget(
                     circleSize: Size(circleDiameter, circleDiameter),
+                    circleColor1: Color(0xFF09FBD3),
+                    circleColor2: Color.fromARGB(255, 1, 147, 123),
+                  ),
+                ),
+                Positioned(
+                  left: circleDiameter * 0.15,
+                  top: circleDiameter * 0.9,
+                  child: CircleWidget(
+                    circleSize: Size(circleDiameter, circleDiameter),
+                    circleColor1: Color(0xFFFE53BB),
+                    circleColor2: Color.fromARGB(255, 164, 3, 99),
                   ),
                 ),
                 Center(
@@ -79,21 +89,57 @@ class _LandingPageContentState extends State<LandingPageContent> {
                         children: [
                           SizedBox(
                             width: MediaQuery.of(context).size.width * 0.9,
-                            child: Image.asset(
-                              'assets/images/tt.png',
-                              fit: BoxFit.contain,
+                            child: Stack(
+                              alignment: Alignment.center,
+                              children: [
+                                // Gradient glowing circle
+                                Container(
+                                  width: width * 0.9,
+                                  height: height * 0.404,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    gradient: SweepGradient(
+                                      colors: [
+                                        Color(0xFFFF53BC), // Pink
+                                        Color(0xFF0AFCD4), // Teal
+                                        Color(0xFFFF53BC), // Loop around
+                                      ],
+                                      startAngle: 0.0,
+                                      endAngle:
+                                          6.28, // 2π radians for full circle
+                                    ),
+                                  ),
+                                ),
+
+                                // Inner dark circle overlay
+                                Container(
+                                  width: width * 0.9,
+                                  height: height * 0.4,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Colors.black.withValues(
+                                      alpha: 0.75,
+                                    ), // semi-transparent dark center
+                                  ),
+                                ),
+                                Image.asset(
+                                  'assets/images/tt.png',
+                                  fit: BoxFit.contain,
+                                ),
+                              ],
                             ),
                           ),
+                          const SizedBox(height: 20,),
                           StylizedText(
                             'Time Trails',
                             textAlignment: TextAlign.center,
                             textStyle: GoogleFonts.eagleLake(
                               fontWeight: FontWeight.w900,
                               fontSize: 54,
-                              color: Colors.limeAccent,
+                              color: Colors.blueAccent,
                             ),
                           ),
-                          const SizedBox(height: 40),
+                          const SizedBox(height: 20),
 
                           TextCarousel(
                             carouselTexts: state.introSlides,
@@ -103,7 +149,7 @@ class _LandingPageContentState extends State<LandingPageContent> {
                             },
                           ),
 
-                          const SizedBox(height: 12),
+                          const SizedBox(height: 10),
 
                           IndicatorRow(
                             currentIndex: state.currentSlideIndex,
@@ -133,7 +179,7 @@ class _LandingPageContentState extends State<LandingPageContent> {
                               context.read<SlideBloc>().add(ChangeSlide(index));
                             },
                           ),
-                          const SizedBox(height: 24),
+                          const SizedBox(height: 20),
 
                           ActionButton(
                             onPressed: () {
