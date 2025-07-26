@@ -52,7 +52,6 @@ class HomeScreen extends StatelessWidget {
                     SlantedBox(
                       width: 200,
                       height: 300,
-                      color: Colors.teal,
                       label: 'Slanted Box',
                     ),
                   ],
