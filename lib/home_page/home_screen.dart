@@ -100,15 +100,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             //final driving = item['driving'];
 
                             return Padding(
-                              padding: const EdgeInsets.all(12),
+                              padding: const EdgeInsets.all(20),
                               child: CustomBox(
-                                width:100,
+                                width:200,
                                 height: 100,
                                 skewFactor: 20,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const SizedBox(height: 40),  
+                                    const SizedBox(height: 20),  
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(20),
                                       child: CachedNetworkImage(
