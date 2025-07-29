@@ -30,7 +30,7 @@ class ArFeatureCard extends StatelessWidget {
                     imageUrl: 'https://picsum.photos/200/200',
                     height: double.infinity,
                     width: double.infinity,
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fitWidth,
                   ),
                 ),
               ),
