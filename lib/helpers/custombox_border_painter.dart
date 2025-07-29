@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:time_trails/helpers/slanted_rhombus_clipper.dart';
+import 'package:time_trails/helpers/custom_box_clipper.dart';
 
-class RhombusBorderPainter extends CustomPainter{
+class CustomboxBorderPainter extends CustomPainter{
   final double cornerRadius;
-
-  RhombusBorderPainter({this.cornerRadius = 20});
+  final double skewFactor;
+  CustomboxBorderPainter({this.cornerRadius = 20, this.skewFactor = 20});
 
   @override void paint(Canvas canvas, Size size) {
     final borderPaint = Paint()
@@ -12,7 +12,7 @@ class RhombusBorderPainter extends CustomPainter{
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.5;
 
-      final path = SlantedRhombusClipper(cornerRadius: cornerRadius).getClip(size);
+      final path = CustomBoxClipper(cornerRadius: cornerRadius, skewFactor: skewFactor).getClip(size);
 
       canvas.drawPath(path, borderPaint);
   }

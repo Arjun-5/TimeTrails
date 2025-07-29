@@ -8,7 +8,7 @@ import 'package:time_trails/helpers/gradient_container.dart';
 import 'package:time_trails/helpers/location_helper.dart';
 import 'package:time_trails/helpers/stylized_text.dart';
 import 'package:time_trails/models/landmark.dart';
-import 'package:time_trails/widgets/slanted_box.dart';
+import 'package:time_trails/widgets/custom_box.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -23,13 +23,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final String _apiKey = dotenv.env['GOOGLE_API_KEY']!;
 
-  bool _isDataLoding = true;
+  bool _isDataLoding = false;
 
   @override
   void initState() {
     super.initState();
 
-    _init();
+    //_init();
   }
 
   Future<void> _init() async {
@@ -92,38 +92,43 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: height * 0.4,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: _landmarkController.landmarks.length,
+                          itemCount: 5,//_landmarkController.landmarks.length,
                           itemBuilder: (context, index) {
-                            final item = _landmarkController.landmarks[index];
-                            final Landmark landmark = item['landmark'];
-                            final walking = item['walking'];
-                            final driving = item['driving'];
+                            //final item = _landmarkController.landmarks[index];
+                            //final Landmark landmark = item['landmark'];
+                            //final walking = item['walking'];
+                            //final driving = item['driving'];
 
                             return Padding(
                               padding: const EdgeInsets.all(12),
-                              child: SlantedBox(
-                                width: 250,
-                                height: 300,
+                              child: CustomBox(
+                                width:100,
+                                height: 100,
+                                skewFactor: 20,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    const SizedBox(height: 40),  
                                     ClipRRect(
-                                      borderRadius: BorderRadius.circular(16),
+                                      borderRadius: BorderRadius.circular(20),
                                       child: CachedNetworkImage(
-                                        imageUrl: landmark.photoUrl(_apiKey),
-                                        height: 150,
+                                        //imageUrl: landmark.photoUrl(_apiKey),
+                                        imageUrl: "https://fastly.picsum.photos/id/1029/200/200.jpg?hmac=CQyxD4azaGb2UDjepBq254UP9v1mF-_rBhYVx8Jw8rs",
+                                        height: 125,
                                         width: double.infinity,
                                         fit: BoxFit.cover,
                                       ),
                                     ),
-                                    const SizedBox(height: 10),
+                                    const SizedBox(height: 25),
                                     StylizedText(
-                                      landmark.name,
+                                      //landmark.name,
+                                      "Landmark Name",
                                       textAlignment: TextAlign.center,
                                     ),
-                                    const SizedBox(height: 6),
+                                    const SizedBox(height: 25),
                                     StylizedText(
-                                      'Distance: ${landmark.name}',
+                                      //'Distance: ${landmark.name}',
+                                      "Landmark Distance",
                                       textAlignment: TextAlign.center,
                                     ),
                                   ],
