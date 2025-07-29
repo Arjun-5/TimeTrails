@@ -20,7 +20,9 @@ class ArFeatureCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          cardInfo.onTap();
+        },
         child: CustomBox(
           width: screenWidth * 0.9,
           height: screenWidth * 0.6,
@@ -34,11 +36,7 @@ class ArFeatureCard extends StatelessWidget {
                 Positioned(
                   top: 0,
                   right: 0,
-                  child: Icon(
-                    cardInfo.icon,
-                    size: 28,
-                    color: Colors.white,
-                  ),
+                  child: Icon(cardInfo.icon, size: 28, color: Colors.white),
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,7 +70,7 @@ class ArFeatureCard extends StatelessWidget {
                         color: Colors.pinkAccent,
                       ),
                     ),
-                    Spacer()
+                    Spacer(),
                   ],
                 ),
               ],

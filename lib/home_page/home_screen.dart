@@ -9,7 +9,7 @@ import 'package:time_trails/helpers/gradient_container.dart';
 import 'package:time_trails/helpers/location_helper.dart';
 import 'package:time_trails/helpers/stylized_text.dart';
 import 'package:time_trails/models/landmark.dart';
-import 'package:time_trails/widgets/ar_card_section.dart';
+import 'package:time_trails/widgets/ar_feature_card_section.dart';
 import 'package:time_trails/widgets/feature_card_section.dart';
 import 'package:time_trails/widgets/landmark_grid.dart';
 
@@ -108,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         const SizedBox(height: 30),
 
-                        ArCardSection(),
+                        ArFeatureCardSection(),
                         const SizedBox(height: 70),
                         FeatureCardSection(),
                         const SizedBox(height: 24),
