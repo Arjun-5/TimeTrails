@@ -7,13 +7,13 @@ import 'package:time_trails/helpers/slanted_rhombus_clipper.dart';
 class SlantedBox extends StatelessWidget {
   final double width;
   final double height;
-  final String label;
+  final Widget child;
 
   const SlantedBox({
     super.key,
     required this.width,
     required this.height,
-    required this.label,
+    required this.child,
   });
 
   @override
@@ -27,11 +27,8 @@ class SlantedBox extends StatelessWidget {
           child: Container(
             width: width,
             height: height,
-            alignment: Alignment.center,
-            child: Text(
-              label,
-              style: const TextStyle(color: Colors.white, fontSize: 18),
-            ),
+            padding: const EdgeInsets.all(12),
+            child: child,
           ),
         ),
       ),
