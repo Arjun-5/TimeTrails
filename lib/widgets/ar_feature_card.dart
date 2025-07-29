@@ -11,12 +11,12 @@ class ArFeatureCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(right: 16),
+      padding: const EdgeInsets.only(top: 1, bottom: 1),
       child: InkWell(
         onTap: () {},
         child: CustomBox(
           width: screenWidth * 0.9,
-          height: screenWidth * 0.5,
+          height: screenWidth * 0.6,
           cornerRadius: 20,
           topSkewFactor: 0,
           bottomSkewFactor: 20,

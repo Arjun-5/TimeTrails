@@ -80,6 +80,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
           final double circleDiameter = width;
 
+          final double cardWidth = width * 0.9; // Each card takes 90% of screen
+          
+          final double sidePadding = (width - cardWidth) / 2;
+
           return Stack(
             children: [
               SizedBox.expand(
@@ -107,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Positioned.fill(
                 child: SafeArea(
                   child: SingleChildScrollView(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -120,93 +124,109 @@ class _HomeScreenState extends State<HomeScreen> {
                             color: Colors.blueAccent,
                           ),
                         ),
-                        const SizedBox(height: 24),
+                        const SizedBox(height: 30),
+
                         SizedBox(
-                          height: width * .5,
-                          child: ListView(
-                            scrollDirection: Axis.horizontal,
-                            children: List.generate(
-                              3,
-                              (index) => ArFeatureCard(screenWidth: width),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 50,
-                          child: ListView.separated(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: features.length,
-                            separatorBuilder: (_, __) =>
-                                const SizedBox(width: 40),
+                          height: width * 0.5,
+                          child: PageView.builder(
+                            itemCount: 3,
                             itemBuilder: (context, index) {
-                              final feature = features[index];
-                              return FeatureButton(feature: feature);
+                              return Padding(
+                                padding: EdgeInsets.only(
+                                  left: index == 0 ? sidePadding : 8,
+                                  right: index == 2 ? sidePadding : 8,
+                                ),
+                                child: ArFeatureCard(screenWidth: cardWidth),
+                              );
                             },
                           ),
                         ),
-                        const SizedBox(height: 24,)
+                        const SizedBox(height: 30),
+                        SizedBox(
+                          height: width * 0.12,
+                          child: Center(
+                            child: ListView.separated(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: features.length,
+                              separatorBuilder: (_, __) =>
+                                  const SizedBox(width: 20),
+                              itemBuilder: (context, index) {
+                                final feature = features[index];
+                                return FeatureButton(feature: feature);
+                              },
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+
+                        _isDataLoding
+                            ? const Center(child: CircularProgressIndicator())
+                            : GridView.builder(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                      crossAxisCount: 2,
+                                      crossAxisSpacing: 16,
+                                      mainAxisSpacing: 16,
+                                      childAspectRatio: 0.7,
+                                    ),
+                                itemCount: 8,
+                                itemBuilder: (context, index) {
+                                  //final item = _landmarkController.landmarks[index];
+                                  //final Landmark landmark = item['landmark'];
+                                  //final walking = item['walking'];
+                                  //final driving = item['driving'];
+
+                                  return Padding(
+                                    padding: const EdgeInsets.all(20),
+                                    child: CustomBox(
+                                      width: 200,
+                                      height: 100,
+                                      cornerRadius: 20,
+                                      topSkewFactor: 20,
+                                      bottomSkewFactor: 20,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          const SizedBox(height: 20),
+                                          ClipRRect(
+                                            borderRadius: BorderRadius.circular(
+                                              10,
+                                            ),
+                                            child: CachedNetworkImage(
+                                              //imageUrl: landmark.photoUrl(_apiKey),
+                                              imageUrl:
+                                                  "https://fastly.picsum.photos/id/1029/200/200.jpg?hmac=CQyxD4azaGb2UDjepBq254UP9v1mF-_rBhYVx8Jw8rs",
+                                              height: 80,
+                                              width: double.infinity,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          const SizedBox(height: 10),
+                                          StylizedText(
+                                            //landmark.name,
+                                            "Landmark Name",
+                                            textAlignment: TextAlign.center,
+                                          ),
+                                          const SizedBox(height: 10),
+                                          StylizedText(
+                                            //'Distance: ${landmark.name}',
+                                            "Landmark Distance",
+                                            textAlignment: TextAlign.center,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
                       ],
                     ),
                   ),
                 ),
               ),
-              _isDataLoding
-                  ? const Center(child: CircularProgressIndicator())
-                  : Center(
-                      child: SizedBox(
-                        height: height * 0.4,
-                        child: ListView.builder(
-                          scrollDirection: Axis.horizontal,
-                          itemCount: 5, //_landmarkController.landmarks.length,
-                          itemBuilder: (context, index) {
-                            //final item = _landmarkController.landmarks[index];
-                            //final Landmark landmark = item['landmark'];
-                            //final walking = item['walking'];
-                            //final driving = item['driving'];
-
-                            return Padding(
-                              padding: const EdgeInsets.all(20),
-                              child: CustomBox(
-                                width: 200,
-                                height: 100,
-                                cornerRadius: 20,
-                                topSkewFactor: 20,
-                                bottomSkewFactor: 20,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const SizedBox(height: 20),
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.circular(20),
-                                      child: CachedNetworkImage(
-                                        //imageUrl: landmark.photoUrl(_apiKey),
-                                        imageUrl:
-                                            "https://fastly.picsum.photos/id/1029/200/200.jpg?hmac=CQyxD4azaGb2UDjepBq254UP9v1mF-_rBhYVx8Jw8rs",
-                                        height: 125,
-                                        width: double.infinity,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    const SizedBox(height: 25),
-                                    StylizedText(
-                                      //landmark.name,
-                                      "Landmark Name",
-                                      textAlignment: TextAlign.center,
-                                    ),
-                                    const SizedBox(height: 25),
-                                    StylizedText(
-                                      //'Distance: ${landmark.name}',
-                                      "Landmark Distance",
-                                      textAlignment: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ),
-                    ),
             ],
           );
         },
