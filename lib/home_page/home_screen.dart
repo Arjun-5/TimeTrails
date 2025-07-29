@@ -2,14 +2,17 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:time_trails/Controller/landmark_controller.dart';
 import 'package:time_trails/helpers/circle_widget.dart';
 import 'package:time_trails/helpers/gradient_container.dart';
 import 'package:time_trails/helpers/location_helper.dart';
 import 'package:time_trails/helpers/stylized_text.dart';
+import 'package:time_trails/models/feature.dart';
 import 'package:time_trails/models/landmark.dart';
 import 'package:time_trails/widgets/custom_box.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:time_trails/widgets/feature_button.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,13 +26,28 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final String _apiKey = dotenv.env['GOOGLE_API_KEY']!;
 
+  late Future<void> _initFuture;
+
+  List<Feature> features = [];
+
   bool _isDataLoding = false;
 
   @override
   void initState() {
     super.initState();
-
+    _initFuture = _initSetup();
     //_init();
+  }
+
+  Future<void> _initSetup() async {
+    //_init();
+    features = [
+      Feature(icon: Icons.map, onTap: () {}),
+      Feature(icon: Icons.camera, onTap: () {}),
+      Feature(icon: Icons.directions_walk, onTap: () {}),
+      Feature(icon: Icons.history_edu, onTap: () {}),
+      Feature(icon: Icons.compare, onTap: () {}),
+    ];
   }
 
   Future<void> _init() async {
@@ -85,6 +103,41 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
+              Positioned.fill(
+                child: SafeArea(
+                  child: SingleChildScrollView(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        StylizedText(
+                          'Time Trails',
+                          textAlignment: TextAlign.left,
+                          textStyle: GoogleFonts.eagleLake(
+                            fontWeight: FontWeight.w700,
+                            fontSize: 40,
+                            color: Colors.blueAccent,
+                          ),
+                        ),
+                        const SizedBox(height: 24),
+                        SizedBox(
+                          height: 50,
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: features.length,
+                            separatorBuilder: (_, __) =>
+                                const SizedBox(width: 40),
+                            itemBuilder: (context, index) {
+                              final feature = features[index];
+                              return FeatureButton(feature: feature);
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
               _isDataLoding
                   ? const Center(child: CircularProgressIndicator())
                   : Center(
@@ -92,7 +145,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: height * 0.4,
                         child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: 5,//_landmarkController.landmarks.length,
+                          itemCount: 5, //_landmarkController.landmarks.length,
                           itemBuilder: (context, index) {
                             //final item = _landmarkController.landmarks[index];
                             //final Landmark landmark = item['landmark'];
@@ -102,18 +155,19 @@ class _HomeScreenState extends State<HomeScreen> {
                             return Padding(
                               padding: const EdgeInsets.all(20),
                               child: CustomBox(
-                                width:200,
+                                width: 200,
                                 height: 100,
                                 skewFactor: 20,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const SizedBox(height: 20),  
+                                    const SizedBox(height: 20),
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(20),
                                       child: CachedNetworkImage(
                                         //imageUrl: landmark.photoUrl(_apiKey),
-                                        imageUrl: "https://fastly.picsum.photos/id/1029/200/200.jpg?hmac=CQyxD4azaGb2UDjepBq254UP9v1mF-_rBhYVx8Jw8rs",
+                                        imageUrl:
+                                            "https://fastly.picsum.photos/id/1029/200/200.jpg?hmac=CQyxD4azaGb2UDjepBq254UP9v1mF-_rBhYVx8Jw8rs",
                                         height: 125,
                                         width: double.infinity,
                                         fit: BoxFit.cover,

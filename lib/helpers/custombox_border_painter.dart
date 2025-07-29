@@ -8,7 +8,7 @@ class CustomboxBorderPainter extends CustomPainter{
 
   @override void paint(Canvas canvas, Size size) {
     final borderPaint = Paint()
-      ..color = Colors.white.withValues(alpha: 0.3)
+      ..color = Colors.white.withValues(alpha: 1)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.5;
 
