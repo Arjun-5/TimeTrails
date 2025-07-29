@@ -10,6 +10,7 @@ import 'package:time_trails/helpers/location_helper.dart';
 import 'package:time_trails/helpers/stylized_text.dart';
 import 'package:time_trails/models/feature.dart';
 import 'package:time_trails/models/landmark.dart';
+import 'package:time_trails/widgets/ar_feature_card.dart';
 import 'package:time_trails/widgets/custom_box.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:time_trails/widgets/feature_button.dart';
@@ -121,6 +122,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         const SizedBox(height: 24),
                         SizedBox(
+                          height: width * .5,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            children: List.generate(
+                              3,
+                              (index) => ArFeatureCard(screenWidth: width),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
                           height: 50,
                           child: ListView.separated(
                             scrollDirection: Axis.horizontal,
@@ -133,6 +144,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             },
                           ),
                         ),
+                        const SizedBox(height: 24,)
                       ],
                     ),
                   ),
@@ -157,7 +169,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: CustomBox(
                                 width: 200,
                                 height: 100,
-                                skewFactor: 20,
+                                cornerRadius: 20,
+                                topSkewFactor: 20,
+                                bottomSkewFactor: 20,
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [

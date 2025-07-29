@@ -9,9 +9,16 @@ class FeatureButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomBox(width: 50, height: 40, skewFactor: 0, child: InkWell(
-      onTap: ()=> feature.onTap,
-      child: Icon(feature.icon,color: Colors.white,),
-    ));
+    return CustomBox(
+      width: 50,
+      height: 40,
+      cornerRadius: 20,
+      topSkewFactor: 0,
+      bottomSkewFactor: 0,
+      child: InkWell(
+        onTap: () => feature.onTap,
+        child: Icon(feature.icon, color: Colors.white),
+      ),
+    );
   }
 }

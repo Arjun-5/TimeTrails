@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 class CustomBoxClipper extends CustomClipper<Path>{
   final double cornerRadius;
 
-  final double skewFactor;
+  final double topSkewFactor;
 
-  const CustomBoxClipper({this.cornerRadius = 20, this.skewFactor = 0});
+  final double bottomSkewFactor;
+
+  const CustomBoxClipper({this.cornerRadius = 20, this.topSkewFactor = 20, this.bottomSkewFactor =20});
 
   @override
   Path getClip(Size size) {
@@ -14,15 +16,15 @@ class CustomBoxClipper extends CustomClipper<Path>{
     double height = size.height;
 
     Path customBoxPath = Path()
-      ..moveTo(cornerRadius, skewFactor)
+      ..moveTo(cornerRadius, topSkewFactor)
       ..lineTo(width - cornerRadius, 0)
       ..quadraticBezierTo(width, 0, width, cornerRadius)
-      ..lineTo(width, height - cornerRadius - skewFactor)
-      ..quadraticBezierTo(width, height - skewFactor,width - cornerRadius, height - skewFactor)
+      ..lineTo(width, height - cornerRadius - bottomSkewFactor)
+      ..quadraticBezierTo(width, height - bottomSkewFactor,width - cornerRadius, height - bottomSkewFactor)
       ..lineTo(cornerRadius, height)
       ..quadraticBezierTo(0, height, 0, height - cornerRadius)
-      ..lineTo(0, cornerRadius + skewFactor)
-      ..quadraticBezierTo(0, skewFactor, cornerRadius, skewFactor)
+      ..lineTo(0, cornerRadius + topSkewFactor)
+      ..quadraticBezierTo(0, topSkewFactor, cornerRadius, topSkewFactor)
       ..close();
 
     return customBoxPath;

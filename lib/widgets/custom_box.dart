@@ -7,23 +7,27 @@ import 'package:time_trails/helpers/custom_box_clipper.dart';
 class CustomBox extends StatelessWidget {
   final double width;
   final double height;
-  final double skewFactor;
+  final double cornerRadius;
+  final double topSkewFactor;
+  final double bottomSkewFactor;
   final Widget child;
 
   const CustomBox({
     super.key,
     required this.width,
     required this.height,
+    required this.cornerRadius,
+    required this.topSkewFactor,
+    required this.bottomSkewFactor,
     required this.child,
-    required this.skewFactor
   });
 
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      painter: CustomboxBorderPainter(cornerRadius: 20,skewFactor: skewFactor),
+      painter: CustomboxBorderPainter(cornerRadius: cornerRadius,topSkewFactor: topSkewFactor, bottomSkewFactor: bottomSkewFactor),
       child: ClipPath(
-        clipper: CustomBoxClipper(cornerRadius: 20, skewFactor: skewFactor),
+        clipper: CustomBoxClipper(cornerRadius: cornerRadius, topSkewFactor: topSkewFactor, bottomSkewFactor: bottomSkewFactor),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
           child: Container(
