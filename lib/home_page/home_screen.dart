@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
           final double circleDiameter = width;
 
           final double cardWidth = width * 0.9; // Each card takes 90% of screen
-          
+
           final double sidePadding = (width - cardWidth) / 2;
 
           return Stack(
@@ -143,17 +143,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         const SizedBox(height: 30),
                         SizedBox(
-                          height: width * 0.12,
+                          width: height * 0.9,
+                          height: width * 0.125,
                           child: Center(
-                            child: ListView.separated(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: features.length,
-                              separatorBuilder: (_, __) =>
-                                  const SizedBox(width: 20),
-                              itemBuilder: (context, index) {
-                                final feature = features[index];
-                                return FeatureButton(feature: feature);
-                              },
+                            child: Row(
+                              spacing: width * 0.05,
+                              mainAxisAlignment: MainAxisAlignment
+                                  .center, // Center the Row itself
+                              children: List.generate(
+                                features.length,
+                                (index) =>
+                                    FeatureButton(feature: features[index], width: width,),
+                              ),
                             ),
                           ),
                         ),
