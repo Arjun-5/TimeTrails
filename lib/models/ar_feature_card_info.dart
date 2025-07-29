@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-class ArFeatureCard {
+class ArFeatureCardInfo {
   final String title;
   final String description;
   final IconData icon;
   final String featureName;
   
-  ArFeatureCard({required this.title, required this.description, required this.featureName, required this.icon});
+  ArFeatureCardInfo({required this.title, required this.description, required this.featureName, required this.icon});
 }

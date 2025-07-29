@@ -8,6 +8,7 @@ import 'package:time_trails/helpers/circle_widget.dart';
 import 'package:time_trails/helpers/gradient_container.dart';
 import 'package:time_trails/helpers/location_helper.dart';
 import 'package:time_trails/helpers/stylized_text.dart';
+import 'package:time_trails/models/ar_feature_card_info.dart';
 import 'package:time_trails/models/feature.dart';
 import 'package:time_trails/models/landmark.dart';
 import 'package:time_trails/widgets/ar_feature_card.dart';
@@ -31,6 +32,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<Feature> features = [];
 
+  List<ArFeatureCardInfo> cardInfos = [];
+
   bool _isDataLoding = false;
 
   @override
@@ -48,6 +51,30 @@ class _HomeScreenState extends State<HomeScreen> {
       Feature(icon: Icons.directions_walk, onTap: () {}),
       Feature(icon: Icons.history_edu, onTap: () {}),
       Feature(icon: Icons.compare, onTap: () {}),
+    ];
+
+    cardInfos = [
+      ArFeatureCardInfo(
+        title: '🏛️ Place a Mini Landmark',
+        description:
+            'Preview a heritage monument in your space. Move around and explore it in 3D.',
+        featureName: '3D Model Preview',
+        icon: Icons.view_in_ar_outlined,
+      ),
+      ArFeatureCardInfo(
+        title: 'Time-Travel Lens',
+        description:
+            'Blend the past with the present using your camera to reveal historical views.',
+        featureName: '🖼️ Photo Overlay Mode',
+        icon: Icons.compare_rounded,
+      ),
+      ArFeatureCardInfo(
+        title: 'Discover in AR',
+        description:
+            'Point your camera and uncover floating facts, stories, and trivia.',
+        featureName: 'Floating Info Cards',
+        icon: Icons.info_outlined,
+      ),
     ];
   }
 
@@ -129,14 +156,19 @@ class _HomeScreenState extends State<HomeScreen> {
                         SizedBox(
                           height: width * 0.5,
                           child: PageView.builder(
-                            itemCount: 3,
+                            itemCount: cardInfos.length,
                             itemBuilder: (context, index) {
                               return Padding(
                                 padding: EdgeInsets.only(
                                   left: index == 0 ? sidePadding : 8,
-                                  right: index == 2 ? sidePadding : 8,
+                                  right: index == cardInfos.length - 1
+                                      ? sidePadding
+                                      : 8,
                                 ),
-                                child: ArFeatureCard(screenWidth: cardWidth),
+                                child: ArFeatureCard(
+                                  screenWidth: cardWidth,
+                                  cardInfo: cardInfos[index],
+                                ),
                               );
                             },
                           ),
@@ -152,8 +184,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   .center, // Center the Row itself
                               children: List.generate(
                                 features.length,
-                                (index) =>
-                                    FeatureButton(feature: features[index], width: width,),
+                                (index) => FeatureButton(
+                                  feature: features[index],
+                                  width: width,
+                                ),
                               ),
                             ),
                           ),
