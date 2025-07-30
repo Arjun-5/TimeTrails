@@ -4,8 +4,8 @@ import 'package:time_trails/helpers/stylized_text.dart';
 
 class ActionButton extends StatelessWidget {
   final VoidCallback onPressed;
-
-  const ActionButton({super.key, required this.onPressed});
+  final String name;
+  const ActionButton({super.key, required this.onPressed, this.name = "Start"});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class ActionButton extends StatelessWidget {
         elevation: 12,
       ),
       child: StylizedText(
-        'Start',
+        name,
         textAlignment: TextAlign.center,
         textStyle: GoogleFonts.robotoMono(
           fontSize: 20,

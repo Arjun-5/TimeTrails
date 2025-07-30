@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:time_trails/models/ar_feature_card_info.dart';
+import 'package:time_trails/views/ar_floating_info_cards_screen.dart';
 import 'package:time_trails/views/ar_photo_overlay_screen.dart';
 import 'package:time_trails/views/ar_view_screen.dart';
 
@@ -37,8 +38,7 @@ List<ArFeatureCardInfo> arFeatureCards(BuildContext context) => [
     featureName: 'Floating Info Cards',
     icon: Icons.info_outlined,
     onTap: () {
-      // Example placeholder
-      print("Floating info tapped");
+      Navigator.push(context, MaterialPageRoute(builder: (_) => ArFloatingInfoCardsScreen()));
     },
   ),
 ];
