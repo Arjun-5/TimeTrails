@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:time_trails/landing_page/landing_page.dart';
 import 'package:time_trails/models/ar_feature_card_info.dart';
+import 'package:time_trails/views/ar_view_screen.dart';
 
 List<ArFeatureCardInfo> arFeatureCards(BuildContext context) => [
   ArFeatureCardInfo(
@@ -13,7 +14,7 @@ List<ArFeatureCardInfo> arFeatureCards(BuildContext context) => [
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => LandingPage(), //Ar3DModelScreen()),
+          builder: (_) => ArViewScreen() //LandingPage(), //Ar3DModelScreen()),
         ),
       );
     },

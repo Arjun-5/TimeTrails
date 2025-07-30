@@ -1,3 +1,4 @@
+import 'package:time_trails/models/landmark_distance.dart';
 import 'package:time_trails/services/distance_matrix_service.dart';
 import 'package:time_trails/services/landmark_service.dart';
 
@@ -6,7 +7,7 @@ class LandmarkController {
 
   final _distanceServices = DistanceMatrixService();
 
-  List<Map<String, dynamic>> landmarks = [];
+  List<LandmarkDistance> landmarks = [];
 
   Future<void> loadLandmarksWithDistances(
     double userLatitude,
@@ -34,7 +35,11 @@ class LandmarkController {
           mode: 'driving',
         );
 
-        return {'landmark': landmark, 'walking': walking, 'driving': driving};
+        return LandmarkDistance(
+          landmark: landmark,
+          walkingDistance: walking,
+          drivingDistance: driving,
+        );
       }),
     );
   }

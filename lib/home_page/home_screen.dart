@@ -8,7 +8,6 @@ import 'package:time_trails/helpers/circle_widget.dart';
 import 'package:time_trails/helpers/gradient_container.dart';
 import 'package:time_trails/helpers/location_helper.dart';
 import 'package:time_trails/helpers/stylized_text.dart';
-import 'package:time_trails/models/landmark.dart';
 import 'package:time_trails/widgets/ar_feature_card_section.dart';
 import 'package:time_trails/widgets/feature_card_section.dart';
 import 'package:time_trails/widgets/landmark_grid.dart';
@@ -27,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   late Future<void> _initFuture;
 
-  bool _isDataLoding = false;
+  bool _isDataLoding = true;
 
   @override
   void initState() {
@@ -117,7 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ? const Center(child: CircularProgressIndicator())
                             : LandmarkGrid(
                                 apiKey: _apiKey,
-                                //landmarks: [_landmarkController.landmarks],
+                                //landmarks: _landmarkController.landmarks,
                               ),
                       ],
                     ),

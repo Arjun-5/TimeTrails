@@ -1,6 +1,6 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:time_trails/helpers/stylized_text.dart';
 import 'package:time_trails/models/ar_feature_card_info.dart';
 import 'package:time_trails/widgets/custom_box.dart';
 
@@ -42,33 +42,40 @@ class ArFeatureCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    StylizedText(
+                    AutoSizeText(
                       cardInfo.title,
-                      textAlignment: TextAlign.left,
-                      textStyle: GoogleFonts.poppins(
-                        fontSize: 18,
+                      maxLines: 1,
+                      style: GoogleFonts.poppins(
                         fontWeight: FontWeight.w800,
                         color: Colors.white,
                       ),
+                      minFontSize: 8,
+                      maxFontSize: 18,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     const SizedBox(height: 15),
-                    StylizedText(
+                    AutoSizeText(
                       cardInfo.description,
-                      textAlignment: TextAlign.left,
-                      textStyle: GoogleFonts.poppins(
-                        fontSize: 16,
-                        color: Colors.teal,
+                      maxLines: 2,
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white,
                       ),
+                      minFontSize: 8,
+                      maxFontSize: 18,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     const Spacer(),
-                    StylizedText(
+                    AutoSizeText(
                       cardInfo.featureName,
-                      textAlignment: TextAlign.left,
-                      textStyle: GoogleFonts.poppins(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.pinkAccent,
+                      maxLines: 1,
+                      style: GoogleFonts.poppins(
+                        fontWeight: FontWeight.w800,
+                        color: Colors.white,
                       ),
+                      minFontSize: 8,
+                      maxFontSize: 18,
+                      overflow: TextOverflow.ellipsis,
                     ),
                     Spacer(),
                   ],

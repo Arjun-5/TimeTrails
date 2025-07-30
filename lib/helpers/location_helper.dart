@@ -21,12 +21,17 @@ Future<Position> getUserLocation() async {
       'Location permissions are permanently denied, cannot request permissions.',
     );
   }
-  LocationSettings locationSettings = LocationSettings(
+
+  //Doesnt work as the geolocator is now downgraded
+  /*LocationSettings locationSettings = LocationSettings(
     accuracy: LocationAccuracy.best,
     distanceFilter: 10,
   );
-
   return await Geolocator.getCurrentPosition(
     locationSettings: locationSettings,
+  ); */
+  //Downgraded geolocator to get the AR Flutter plugin working
+  return await Geolocator.getCurrentPosition(
+    desiredAccuracy: LocationAccuracy.best,
   );
 }
