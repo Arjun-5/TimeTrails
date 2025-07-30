@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:ar_flutter_plugin_2/ar_flutter_plugin.dart';
 import 'package:ar_flutter_plugin_2/datatypes/config_planedetection.dart';
 import 'package:ar_flutter_plugin_2/datatypes/node_types.dart';
@@ -7,6 +8,8 @@ import 'package:ar_flutter_plugin_2/managers/ar_object_manager.dart';
 import 'package:ar_flutter_plugin_2/managers/ar_session_manager.dart';
 import 'package:ar_flutter_plugin_2/models/ar_node.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:vector_math/vector_math_64.dart' hide Colors;
 
@@ -21,6 +24,7 @@ class _ArViewScreenState extends State<ArViewScreen> {
   late ARSessionManager arSessionManager;
   late ARObjectManager arObjectManager;
   late ARAnchorManager arAnchorManager;
+  final GlobalKey _repaintKey = GlobalKey();
 
   ARNode? modelNode;
   bool isModelPlaced = false;
@@ -34,14 +38,21 @@ class _ArViewScreenState extends State<ArViewScreen> {
   }
 
   Future<void> _checkPermissions() async {
-    Map<Permission, PermissionStatus> statuses = await [
+    final statuses = await [
       Permission.camera,
       Permission.storage,
+      Permission.photos,
+      Permission.manageExternalStorage,
     ].request();
 
-    if (statuses[Permission.camera] != PermissionStatus.granted ||
-        statuses[Permission.storage] != PermissionStatus.granted) {
-      _showPermissionDialog();
+    final allGranted = statuses.values.every((status) => status.isGranted);
+
+    if (!allGranted) {
+      if (statuses.values.any((status) => status.isPermanentlyDenied)) {
+        await openAppSettings();
+      } else {
+        _showPermissionDialog();
+      }
     }
   }
 
@@ -51,7 +62,8 @@ class _ArViewScreenState extends State<ArViewScreen> {
       builder: (context) => AlertDialog(
         title: const Text('Permissions Required'),
         content: const Text(
-            'Camera and storage permissions are required to use AR features.'),
+          'Camera and storage permissions are required to use AR features.',
+        ),
         actions: [
           TextButton(
             onPressed: () {
@@ -79,9 +91,12 @@ class _ArViewScreenState extends State<ArViewScreen> {
       ),
       body: Stack(
         children: [
-          ARView(
-            onARViewCreated: _onARViewCreated,
-            planeDetectionConfig: PlaneDetectionConfig.horizontal,
+          RepaintBoundary(
+            key: _repaintKey,
+            child: ARView(
+              onARViewCreated: _onARViewCreated,
+              planeDetectionConfig: PlaneDetectionConfig.horizontal,
+            ),
           ),
           if (!isModelPlaced)
             Align(
@@ -152,28 +167,47 @@ class _ArViewScreenState extends State<ArViewScreen> {
       modelNode = node;
       setState(() => isModelPlaced = true);
     } else {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text("Failed to place model")));
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text("Failed to place model")));
+      }
     }
   }
 
   Future<void> _takeSnapshot() async {
-    setState(() {
-      isLoadingSnapshot = true;
-    });
+    setState(() => isLoadingSnapshot = true);
 
     try {
-      final snapshot = await arSessionManager.snapshot();
+      RenderRepaintBoundary boundary =
+          _repaintKey.currentContext!.findRenderObject()
+              as RenderRepaintBoundary;
+
+      final image = await boundary.toImage(pixelRatio: 3.0);
+      final byteData = await image.toByteData(format: ImageByteFormat.png);
+      final pngBytes = byteData!.buffer.asUint8List();
+
+      final result = await ImageGallerySaverPlus.saveImage(pngBytes);
+      debugPrint("Saved image result: $result");
+
+      if (!mounted) return;
       setState(() {
-        snapshotImage = snapshot;
+        snapshotImage = MemoryImage(pngBytes);
         isLoadingSnapshot = false;
       });
+
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Snapshot saved to gallery")),
+        );
+      }
     } catch (e) {
-      setState(() => isLoadingSnapshot = false);
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text("Snapshot failed: $e")));
+      if (mounted) {
+        setState(() => isLoadingSnapshot = false);
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text("Snapshot failed: $e")));
+      }
     }
   }
 

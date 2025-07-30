@@ -26,7 +26,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   late Future<void> _initFuture;
 
-  bool _isDataLoding = true;
+  //bool _isDataLoding = true;
+  bool _isDataLoding = false;
 
   @override
   void initState() {
