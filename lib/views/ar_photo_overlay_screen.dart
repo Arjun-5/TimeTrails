@@ -19,38 +19,37 @@ class _ArPhotoOverlayScreenState extends State<ArPhotoOverlayScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Time-Travel Lens'),
-      ),
+      appBar: AppBar(title: const Text('Time-Travel Lens')),
       body: Stack(
         children: [
           ARView(
             onARViewCreated: _onARViewCreated,
-            planeDetectionConfig: PlaneDetectionConfig.none, // no plane detection needed
+            planeDetectionConfig: PlaneDetectionConfig.none,
           ),
-          // The historical photo overlay with adjustable opacity
           IgnorePointer(
-            // Let touch events pass through to ARView
             child: Opacity(
               opacity: _overlayOpacity,
               child: Image.asset(
-                'assets/images/historical_image.png', // Replace with your old photo asset
-                fit: BoxFit.cover,
-                width: double.infinity,
-                height: double.infinity,
+                'assets/images/historical_image.jpg',
+                height: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                fit: BoxFit.contain,
               ),
             ),
           ),
-          // Slider to adjust opacity
           Positioned(
             bottom: 40,
             left: 16,
             right: 16,
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 const Text(
                   "Adjust Overlay Opacity",
-                  style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
                 Slider(
                   activeColor: Colors.white,
@@ -67,7 +66,6 @@ class _ArPhotoOverlayScreenState extends State<ArPhotoOverlayScreen> {
               ],
             ),
           ),
-          // Optional: small labels "Then" and "Now"
           Positioned(
             top: 16,
             left: 16,
@@ -76,7 +74,10 @@ class _ArPhotoOverlayScreenState extends State<ArPhotoOverlayScreen> {
               color: Colors.black45,
               child: const Text(
                 'Then',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
@@ -88,7 +89,10 @@ class _ArPhotoOverlayScreenState extends State<ArPhotoOverlayScreen> {
               color: Colors.black45,
               child: const Text(
                 'Now',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),
@@ -104,6 +108,7 @@ class _ArPhotoOverlayScreenState extends State<ArPhotoOverlayScreen> {
     ARLocationManager locationManager,
   ) {
     sessionManager.onInitialize(
+      showAnimatedGuide: false,
       showFeaturePoints: false,
       showPlanes: false,
       showWorldOrigin: false,

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:time_trails/landing_page/landing_page.dart';
 import 'package:time_trails/models/ar_feature_card_info.dart';
+import 'package:time_trails/views/ar_photo_overlay_screen.dart';
 import 'package:time_trails/views/ar_view_screen.dart';
 
 List<ArFeatureCardInfo> arFeatureCards(BuildContext context) => [
@@ -13,9 +13,7 @@ List<ArFeatureCardInfo> arFeatureCards(BuildContext context) => [
     onTap: () {
       Navigator.push(
         context,
-        MaterialPageRoute(
-          builder: (_) => ArViewScreen() //LandingPage(), //Ar3DModelScreen()),
-        ),
+        MaterialPageRoute(builder: (_) => ArViewScreen()),
       );
     },
   ),
@@ -26,8 +24,10 @@ List<ArFeatureCardInfo> arFeatureCards(BuildContext context) => [
     featureName: 'Photo Overlay Mode',
     icon: Icons.compare_rounded,
     onTap: () {
-      // Example placeholder
-      print("Photo overlay mode tapped");
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => ArPhotoOverlayScreen()),
+      );
     },
   ),
   ArFeatureCardInfo(
