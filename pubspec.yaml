@@ -52,6 +52,9 @@ dependencies:
   image_gallery_saver_plus: ^4.0.1
   google_maps_flutter: ^2.12.3
   flutter_polyline_points: ^3.0.1
+  shared_preferences: ^2.5.3
+  firebase_storage: ^12.4.10
+  flutter_launcher_icons: ^0.14.4
 
 dev_dependencies:
   flutter_test:
@@ -79,6 +82,7 @@ flutter:
   assets:
     - .env
     - assets/images/tt.png
+    - assets/images/LTS.png
     - assets/images/historical_image.jpg
     - assets/models/Billboard.glb
     
@@ -107,3 +111,7 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icon/TTIcon.png"

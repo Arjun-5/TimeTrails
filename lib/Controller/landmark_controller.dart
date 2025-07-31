@@ -1,3 +1,4 @@
+import 'package:time_trails/models/landmark.dart';
 import 'package:time_trails/models/landmark_distance.dart';
 import 'package:time_trails/services/distance_matrix_service.dart';
 import 'package:time_trails/services/landmark_service.dart';
@@ -13,13 +14,40 @@ class LandmarkController {
     double userLatitude,
     double userLongitude,
   ) async {
+    
     final rawLandmarks = await _landmarkServices.fetchNearbyLandmarks(
       userLatitude,
       userLongitude,
     );
 
+    final testLandmarks = [
+      Landmark(
+        name: 'Test Landmark 1',
+        latitude: 51.37764363920317, 
+        longitude: 12.405258737595004,
+        photoRef: '',
+        placeId: 'Place1',
+      ),
+      Landmark(
+        name: 'Test Landmark 2',
+        latitude: 51.37935367147786, 
+        longitude: 12.399205186749027,
+        photoRef: '',
+        placeId: 'Test Place2',
+      ),
+      Landmark(
+        name: 'Test Landmark 3',
+        latitude: 51.38726485483662, 
+        longitude: 12.408852740966502,
+        photoRef: '',
+        placeId: 'Place3',
+      ),
+    ];
+
+    final combinedLandmarks = [...rawLandmarks, ...testLandmarks];
+
     landmarks = await Future.wait(
-      rawLandmarks.map((landmark) async {
+      combinedLandmarks.map((landmark) async {
         final walking = await _distanceServices.getDistanceToLandmark(
           currentLatitude: userLatitude,
           currentLongitude: userLongitude,

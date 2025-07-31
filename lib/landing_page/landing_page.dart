@@ -39,6 +39,7 @@ class _LandingPageContentState extends State<LandingPageContent> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: LayoutBuilder(
           builder: (context, constraints) {
@@ -123,7 +124,7 @@ class _LandingPageContentState extends State<LandingPageContent> {
                                   ),
                                 ),
                                 Image.asset(
-                                  'assets/images/tt.png',
+                                  'assets/images/LTS.png',
                                   fit: BoxFit.contain,
                                 ),
                               ],

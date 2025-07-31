@@ -30,9 +30,9 @@ class LandmarkGrid extends StatelessWidget {
       itemBuilder: (context, index) {
         final item = landmarks[index];
         final landmark = item.landmark;
-        final walking = item.walkingDistance;
+        /* final walking = item.walkingDistance;
         final driving = item.drivingDistance;
-
+ */
         return Padding(
           padding: const EdgeInsets.all(20),
           child: CustomBox(
@@ -44,30 +44,29 @@ class LandmarkGrid extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 20),
+                const SizedBox(height: 15),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(10),
                   child: CachedNetworkImage(
                     imageUrl: landmark.photoUrl(apiKey),
 
                     //imageUrl:    "https://fastly.picsum.photos/id/1029/200/200.jpg?hmac=CQyxD4azaGb2UDjepBq254UP9v1mF-_rBhYVx8Jw8rs",
-                    height: 80,
+                    height: 60,
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 3),
                 StylizedText(
-                  //landmark.name,
-                  "Landmark Name",
+                  landmark.name,
                   textAlignment: TextAlign.center,
                 ),
-                const SizedBox(height: 10),
+                /* const SizedBox(height: 10),
                 StylizedText(
                   //'Distance: ${landmark.name}',
                   "Landmark Distance",
                   textAlignment: TextAlign.center,
-                ),
+                ), */
               ],
             ),
           ),

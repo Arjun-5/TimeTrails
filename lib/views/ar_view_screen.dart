@@ -8,18 +8,25 @@ import 'package:ar_flutter_plugin_2/managers/ar_object_manager.dart';
 import 'package:ar_flutter_plugin_2/managers/ar_session_manager.dart';
 import 'package:ar_flutter_plugin_2/models/ar_hittest_result.dart';
 import 'package:ar_flutter_plugin_2/models/ar_node.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Badge;
 import 'package:flutter/rendering.dart';
 import 'package:image_gallery_saver_plus/image_gallery_saver_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:time_trails/models/badge.dart';
+import 'package:time_trails/models/landmark.dart';
 import 'package:vector_math/vector_math_64.dart' hide Colors;
 
 class ArViewScreen extends StatefulWidget {
   final String modelUrl;
+  final Landmark? landmark;
+  final String? apiKey;
+
   const ArViewScreen({
     super.key,
     this.modelUrl =
         "https://modelviewer.dev/shared-assets/models/Astronaut.glb",
+    this.landmark,
+    this.apiKey,
   });
 
   @override
@@ -37,10 +44,20 @@ class _ArViewScreenState extends State<ArViewScreen> {
   bool isLoadingSnapshot = false;
   ImageProvider? snapshotImage;
 
+  bool collected = false;
+  bool get badgeMode => widget.landmark != null && widget.apiKey != null;
+  String? get landmarkId => widget.landmark?.placeId;
+
   @override
   void initState() {
     super.initState();
     _checkPermissions();
+
+    if (badgeMode && landmarkId != null) {
+      BadgeStorage.hasCollected(landmarkId!).then((value) {
+        setState(() => collected = value);
+      });
+    }
   }
 
   Future<void> _checkPermissions() async {
@@ -141,6 +158,45 @@ class _ArViewScreenState extends State<ArViewScreen> {
                 ),
               ),
             ),
+          if (badgeMode && !collected && isModelPlaced)
+            Positioned(
+              bottom: 100,
+              left: 20,
+              right: 20,
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Colors.black87,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Text(
+                  "🎯 Tap the model to collect your badge!",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ),
+          if (collected)
+            Positioned(
+              bottom: 30,
+              left: 20,
+              right: 20,
+              child: Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.green.withValues(alpha: 0.9),
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Text(
+                  '✅ You have collected the badge for "${widget.landmark?.name ?? ''}"',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(color: Colors.white, fontSize: 16),
+                ),
+              ),
+            ),
         ],
       ),
     );
@@ -166,6 +222,15 @@ class _ArViewScreenState extends State<ArViewScreen> {
     arSessionManager.onPlaneOrPointTap = _onPlaneTap;
 
     arObjectManager.onInitialize();
+    arObjectManager.onNodeTap = _onNodeTap;
+  }
+
+  Future<void> _onNodeTap(List<String> nodeNames) async {
+    if (collected || modelNode == null) return;
+
+    if (nodeNames.contains(modelNode!.name)) {
+      await _onBadgeModelTap();
+    }
   }
 
   Future<void> _onPlaneTap(List<ARHitTestResult> hitTestResults) async {
@@ -200,6 +265,35 @@ class _ArViewScreenState extends State<ArViewScreen> {
           context,
         ).showSnackBar(const SnackBar(content: Text("Failed to place model")));
       }
+    }
+  }
+
+  Future<void> _onBadgeModelTap() async {
+    if (!badgeMode || collected || landmarkId == null) return;
+
+    final badge = Badge(
+      landmarkId: landmarkId!,
+      name: widget.landmark!.name,
+      imageUrl: widget.landmark!.photoUrl(widget.apiKey ?? ''),
+      collectedAt: DateTime.now(),
+    );
+
+    await BadgeStorage.addBadge(badge);
+
+    setState(() => collected = true);
+
+    if(!mounted) {
+      return;
+    }
+    
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('🏅 Badge collected: ${widget.landmark!.name}')),
+    );
+
+    // Remove model from scene after collection
+    if (modelNode != null) {
+      await arObjectManager.removeNode(modelNode!);
+      setState(() => isModelPlaced = false);
     }
   }
 
