@@ -17,7 +17,9 @@ class FeatureButton extends StatelessWidget {
       topSkewFactor: 0,
       bottomSkewFactor: 0,
       child: InkWell(
-        onTap: () => feature.onTap,
+        onTap: () {
+          feature.onTap();
+        },
         child: Icon(feature.icon, color: Colors.white),
       ),
     );

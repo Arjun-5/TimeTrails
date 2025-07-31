@@ -24,23 +24,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final String _apiKey = dotenv.env['GOOGLE_API_KEY']!;
 
-  late Future<void> _initFuture;
-
-  //bool _isDataLoding = true;
-  bool _isDataLoding = false;
+  bool _isDataLoding = true;
+  //bool _isDataLoding = false;
 
   @override
   void initState() {
     super.initState();
-    _initFuture = _initSetup();
-    //_init();
+    _initSetup();
   }
 
   Future<void> _initSetup() async {
-    //_init();
-  }
-
-  Future<void> _init() async {
     try {
       Position userPosition = await getUserLocation();
       await _landmarkController.loadLandmarksWithDistances(
@@ -110,14 +103,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
                         ArFeatureCardSection(),
                         const SizedBox(height: 70),
-                        FeatureCardSection(),
+                        FeatureCardSection(landmarkController: _landmarkController,apiKey: _apiKey,),
                         const SizedBox(height: 24),
 
                         _isDataLoding
                             ? const Center(child: CircularProgressIndicator())
                             : LandmarkGrid(
                                 apiKey: _apiKey,
-                                //landmarks: _landmarkController.landmarks,
+                                landmarks: _landmarkController.landmarks,
                               ),
                       ],
                     ),

@@ -8,10 +8,10 @@ class ArFeatureCardSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      final List<ArFeatureCardInfo> cardInfos = arFeatureCards(context);
+    final List<ArFeatureCardInfo> cardInfos = arFeatureCards(context);
     final screenWidth = MediaQuery.of(context).size.width * 0.9;
     final sidePadding = MediaQuery.of(context).size.width * 0.05;
-    final double cardWidth = screenWidth * 0.9; 
+    final double cardWidth = screenWidth * 0.9;
     return SizedBox(
       height: screenWidth * 0.5,
       child: PageView.builder(

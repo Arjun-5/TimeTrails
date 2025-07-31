@@ -1,20 +1,26 @@
 import 'package:flutter/material.dart';
+import 'package:time_trails/Controller/landmark_controller.dart';
+import 'package:time_trails/data/feature_card_data.dart';
 import 'package:time_trails/models/feature.dart';
 import 'package:time_trails/widgets/feature_button.dart';
 
 class FeatureCardSection extends StatelessWidget {
-  FeatureCardSection({super.key});
+  final LandmarkController landmarkController;
+  final String apiKey;
 
-  final List<Feature> features = [
-    Feature(icon: Icons.map, onTap: () {}),
-    Feature(icon: Icons.camera, onTap: () {}),
-    Feature(icon: Icons.directions_walk, onTap: () {}),
-    Feature(icon: Icons.history_edu, onTap: () {}),
-    Feature(icon: Icons.compare, onTap: () {}),
-  ];
+  const FeatureCardSection({
+    super.key,
+    required this.landmarkController,
+    required this.apiKey,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final List<Feature> features = getFeatureCards(
+      context,
+      landmarkController,
+      apiKey,
+    );
     final width = MediaQuery.of(context).size.width;
 
     return SizedBox(
