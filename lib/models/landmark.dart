@@ -3,14 +3,14 @@ class Landmark {
   final double latitude;
   final double longitude;
   final String photoRef;
-  final String id;
+  final String placeId;
 
   Landmark({
     required this.name,
     required this.latitude,
     required this.longitude,
     required this.photoRef,
-    required this.id,
+    required this.placeId,
   });
 
   factory Landmark.fromJson(Map<String, dynamic> json) {
@@ -19,7 +19,7 @@ class Landmark {
       latitude: json['location']['latitude'],
       longitude: json['location']['longitude'],
       photoRef: json['photos']?[0]['name'] ?? '',
-      id: json['id'],
+      placeId: json['id'],
     );
   }
 

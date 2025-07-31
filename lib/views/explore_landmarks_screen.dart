@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:time_trails/models/landmark.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:time_trails/views/ar_view_screen.dart';
+import 'package:time_trails/views/full_screen_image_view.dart';
 
 class ExploreLandmarksScreen extends StatefulWidget {
   final List<Landmark> landmarks;
@@ -42,8 +45,10 @@ class _ExploreLandmarksScreenState extends State<ExploreLandmarksScreen> {
                   height: 150,
                   width: double.infinity,
                   fit: BoxFit.cover,
-                  placeholder: (_, __) => const Center(child: CircularProgressIndicator()),
-                  errorWidget: (_, __, ___) => const Icon(Icons.image_not_supported),
+                  placeholder: (_, __) =>
+                      const Center(child: CircularProgressIndicator()),
+                  errorWidget: (_, __, ___) =>
+                      const Icon(Icons.image_not_supported),
                 ),
               ),
             const SizedBox(height: 10),
@@ -51,21 +56,59 @@ class _ExploreLandmarksScreenState extends State<ExploreLandmarksScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton.icon(
-                  onPressed: () {
-                    // TODO: Launch AR
+                  onPressed: () async {
+                    final firestore = FirebaseFirestore.instance;
+
+                    final placeInfo = await firestore
+                        .collection('places')
+                        .doc(landmark.placeId)
+                        .get();
+                        
+                    if (!mounted) {
+                      return;
+                    }
+
+                    if (placeInfo.exists) {
+                      final modelUrl = placeInfo.data()?['modelUrl'];
+                      if (modelUrl != null) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => ArViewScreen(modelUrl: modelUrl),
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text("Model URL missing.")),
+                        );
+                      }
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("No AR model found for this landmark."),
+                        ),
+                      );
+                    }
                   },
                   icon: const Icon(Icons.view_in_ar),
                   label: const Text("View in AR"),
                 ),
                 ElevatedButton.icon(
                   onPressed: () {
-                    // TODO: Full image view
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => FullScreenImageView(
+                          imageUrl: landmark.photoUrl(widget.apiKey),
+                        ),
+                      ),
+                    );
                   },
                   icon: const Icon(Icons.image),
                   label: const Text("Full Image"),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),
@@ -75,7 +118,7 @@ class _ExploreLandmarksScreenState extends State<ExploreLandmarksScreen> {
   Set<Marker> _buildMarkers() {
     return widget.landmarks.map((landmark) {
       return Marker(
-        markerId: MarkerId(landmark.id),
+        markerId: MarkerId(landmark.placeId),
         position: LatLng(landmark.latitude, landmark.longitude),
         infoWindow: InfoWindow(
           title: landmark.name,
@@ -103,14 +146,19 @@ class _ExploreLandmarksScreenState extends State<ExploreLandmarksScreen> {
 
     final bounds = LatLngBounds(southwest: southwest, northeast: northeast);
 
-    await Future.delayed(const Duration(milliseconds: 100)); // Wait for map to settle
+    await Future.delayed(
+      const Duration(milliseconds: 100),
+    ); // Wait for map to settle
     _mapController!.animateCamera(CameraUpdate.newLatLngBounds(bounds, 60));
   }
 
   @override
   Widget build(BuildContext context) {
     final initial = widget.landmarks.isNotEmpty
-        ? LatLng(widget.landmarks.first.latitude, widget.landmarks.first.longitude)
+        ? LatLng(
+            widget.landmarks.first.latitude,
+            widget.landmarks.first.longitude,
+          )
         : const LatLng(0, 0);
 
     return Scaffold(

@@ -6,6 +6,7 @@ import 'package:ar_flutter_plugin_2/managers/ar_anchor_manager.dart';
 import 'package:ar_flutter_plugin_2/managers/ar_location_manager.dart';
 import 'package:ar_flutter_plugin_2/managers/ar_object_manager.dart';
 import 'package:ar_flutter_plugin_2/managers/ar_session_manager.dart';
+import 'package:ar_flutter_plugin_2/models/ar_hittest_result.dart';
 import 'package:ar_flutter_plugin_2/models/ar_node.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -14,7 +15,12 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:vector_math/vector_math_64.dart' hide Colors;
 
 class ArViewScreen extends StatefulWidget {
-  const ArViewScreen({super.key});
+  final String modelUrl;
+  const ArViewScreen({
+    super.key,
+    this.modelUrl =
+        "https://modelviewer.dev/shared-assets/models/Astronaut.glb",
+  });
 
   @override
   State<ArViewScreen> createState() => _ArViewScreenState();
@@ -101,9 +107,18 @@ class _ArViewScreenState extends State<ArViewScreen> {
           if (!isModelPlaced)
             Align(
               alignment: Alignment.bottomCenter,
-              child: ElevatedButton(
-                onPressed: _placeModel,
-                child: const Text("Place Monument"),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'Tap on a detected plane to place the model',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    shadows: [Shadow(blurRadius: 5, color: Colors.black)],
+                    fontSize: 16,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
           if (isLoadingSnapshot)
@@ -143,29 +158,42 @@ class _ArViewScreenState extends State<ArViewScreen> {
 
     arSessionManager.onInitialize(
       showPlanes: true,
-      handleTaps: false,
+      handleTaps: true,
       handlePans: true,
       handleRotation: true,
     );
 
+    arSessionManager.onPlaneOrPointTap = _onPlaneTap;
+
     arObjectManager.onInitialize();
   }
 
-  Future<void> _placeModel() async {
-    if (isModelPlaced) return;
+  Future<void> _onPlaneTap(List<ARHitTestResult> hitTestResults) async {
+    if (isModelPlaced || hitTestResults.isEmpty) return;
+
+    final hit = hitTestResults.first;
+
+    setState(() => isLoadingSnapshot = true);
 
     final node = ARNode(
       type: NodeType.webGLB,
-      uri: "https://modelviewer.dev/shared-assets/models/Astronaut.glb",
-      scale: Vector3(0.2, 0.2, 0.2),
-      position: Vector3(0.0, 0.0, -1.0),
-      rotation: Vector4(1.0, 0.0, 0.0, 0.0),
+      uri: widget.modelUrl,
+      scale: Vector3(5, 5, 5),
+      position: hit.worldTransform.getTranslation(),
+      rotation: Vector4(0.0, 1.0, 0.0, 3.14),
     );
 
-    final success = await arObjectManager.addNode(node);
+    final bool? success = await arObjectManager.addNode(node);
+    setState(() => isLoadingSnapshot = false);
+
     if (success == true) {
       modelNode = node;
       setState(() => isModelPlaced = true);
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text("Model placed")));
+      }
     } else {
       if (mounted) {
         ScaffoldMessenger.of(
@@ -174,6 +202,37 @@ class _ArViewScreenState extends State<ArViewScreen> {
       }
     }
   }
+
+  /* Future<void> _placeModel() async {
+    if (isModelPlaced) return;
+
+    debugPrint('Place Model ${widget.modelUrl}');
+
+    final node = ARNode(
+      type: NodeType.webGLB,
+      uri: widget.modelUrl,
+      scale: Vector3(1, 1, 1),
+      position: Vector3(0.0, 0.0, -1.0),
+      rotation: Vector4(1.0, 0.0, 0.0, 0.0),
+    );
+
+    final success = await arObjectManager.addNode(node);
+    if (success == true) {
+      modelNode = node;
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text("Model placed")));
+      }
+      setState(() => isModelPlaced = true);
+    } else {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text("Failed to place model")));
+      }
+    }
+  } */
 
   Future<void> _takeSnapshot() async {
     setState(() => isLoadingSnapshot = true);
