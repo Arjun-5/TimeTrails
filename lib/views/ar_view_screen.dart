@@ -203,37 +203,6 @@ class _ArViewScreenState extends State<ArViewScreen> {
     }
   }
 
-  /* Future<void> _placeModel() async {
-    if (isModelPlaced) return;
-
-    debugPrint('Place Model ${widget.modelUrl}');
-
-    final node = ARNode(
-      type: NodeType.webGLB,
-      uri: widget.modelUrl,
-      scale: Vector3(1, 1, 1),
-      position: Vector3(0.0, 0.0, -1.0),
-      rotation: Vector4(1.0, 0.0, 0.0, 0.0),
-    );
-
-    final success = await arObjectManager.addNode(node);
-    if (success == true) {
-      modelNode = node;
-      if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(content: Text("Model placed")));
-      }
-      setState(() => isModelPlaced = true);
-    } else {
-      if (mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(content: Text("Failed to place model")));
-      }
-    }
-  } */
-
   Future<void> _takeSnapshot() async {
     setState(() => isLoadingSnapshot = true);
 
