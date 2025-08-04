@@ -47,3 +47,4 @@ app.*.map.json
 /android/secrets.properties
 /android/app/google-services.json
 /android/app/release-keystore.jks
+/lib/firebase_options.dart

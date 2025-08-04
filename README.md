@@ -2,7 +2,7 @@
 
 # 🕰️ Time Trails
 
-![Time Trails App Icon](./assets/icon/TTLogo.png)
+![Time Trails App Icon](./assets/app_icon.png)
 
 **Explore history like never before — immersive AR experiences of nearby landmarks, from your couch or on the go!**
 
@@ -70,7 +70,8 @@ The 3D models are sourced from the [Leipzig Open Data 3D Stadtmodell](https://op
 ## 📱 Download
 
 **Android APK:**  
-[Download Time Trails APK](https://www.dl.dropboxusercontent.com/scl/fi/1t173ycfspuc7yv4z2bz4/Time-Trails.apk?rlkey=0gclbb0wwkve74mwzbowu61ut&e=1&st=vqelaojh&dl=0)
+[Download Time Trails APK](./releases/TimeTrails-latest.apk)  
+*(Link will be updated with the latest build)*
 
 ---
 
@@ -80,7 +81,7 @@ The 3D models are sourced from the [Leipzig Open Data 3D Stadtmodell](https://op
 - Google Maps SDK & Direction, Routes API  
 - Google Geocoding & Directions API  
 - Firebase Firestore, Storage & Firebase Functions  
-- ARCore (Android) via Flutter plugins  
+- ARKit (iOS) & ARCore (Android) via Flutter plugins  
 - 3D building models from Leipzig Open Data
 
 ---
