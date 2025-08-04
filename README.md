@@ -1,8 +1,6 @@
-# TimeTrails
+<img src="https://github.com/Arjun-5/TimeTrails/blob/main/assets/icon/TTLogo.png" alt="Logo" width="150"/>
 
 # 🕰️ Time Trails
-
-![Time Trails App Icon](./assets/icon/TTLogo.png)
 
 **Explore history like never before — immersive AR experiences of nearby landmarks, from your couch or on the go!**
 
