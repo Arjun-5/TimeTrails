@@ -1,8 +1,6 @@
-# TimeTrails
+<img src="https://github.com/Arjun-5/TimeTrails/blob/main/assets/icon/TTLogo.png" alt="Logo" width="150"/>
 
 # 🕰️ Time Trails
-
-![Time Trails App Icon](./assets/app_icon.png)
 
 **Explore history like never before — immersive AR experiences of nearby landmarks, from your couch or on the go!**
 
@@ -70,8 +68,7 @@ The 3D models are sourced from the [Leipzig Open Data 3D Stadtmodell](https://op
 ## 📱 Download
 
 **Android APK:**  
-[Download Time Trails APK](./releases/TimeTrails-latest.apk)  
-*(Link will be updated with the latest build)*
+[Download Time Trails APK](https://www.dl.dropboxusercontent.com/scl/fi/1t173ycfspuc7yv4z2bz4/Time-Trails.apk?rlkey=0gclbb0wwkve74mwzbowu61ut&e=1&st=vqelaojh&dl=0)
 
 ---
 
