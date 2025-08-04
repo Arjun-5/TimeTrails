@@ -78,7 +78,7 @@ The 3D models are sourced from the [Leipzig Open Data 3D Stadtmodell](https://op
 ## 🎥 Demo
 
 <a href="https://www.dropbox.com/scl/fi/YOUR_VIDEO_FILE.mp4?rlkey=xyz123&dl=0" target="_blank">
-  <img src="https://img.icons8.com/ios-filled/100/000000/circled-play.png" width="80" alt="Watch Demo Video"/>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_play_button_icon_%282013%E2%80%932017%29.svg" width="80" alt="Watch Demo Video"/>
 </a>
 
 👉 *Click the play button above to watch the Time Trails demo*
