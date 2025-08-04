@@ -4,7 +4,7 @@
             "android": {
                 "default": {
                     "projectId": "time-trails",
-                    "appId": "1:713418360309:android:74aa4c2cc7eee3af9d8cbc",
+                    "appId": "1:713418360309:android:1bdee873794c1de59d8cbc",
                     "fileOutput": "android/app/google-services.json"
                 }
             },
@@ -20,7 +20,7 @@
                 "lib/firebase_options.dart": {
                     "projectId": "time-trails",
                     "configurations": {
-                        "android": "1:713418360309:android:74aa4c2cc7eee3af9d8cbc"
+                        "android": "1:713418360309:android:1bdee873794c1de59d8cbc"
                     }
                 }
             }

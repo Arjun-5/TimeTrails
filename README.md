@@ -68,7 +68,7 @@ The 3D models are sourced from the [Leipzig Open Data 3D Stadtmodell](https://op
 ## 📱 Download
 
 **Android APK:**  
-[Download Time Trails APK](https://www.dl.dropboxusercontent.com/scl/fi/1t173ycfspuc7yv4z2bz4/Time-Trails.apk?rlkey=0gclbb0wwkve74mwzbowu61ut&e=1&st=vqelaojh&dl=0)
+[Download Time Trails APK](https://www.dl.dropboxusercontent.com/scl/fi/7rzms0ldbgfx4ecplqu91/Time-Trails.apk?rlkey=70htsfxx4drobb3ftljt08o9f&st=763d14st&dl=0)
 
 ---
 
