@@ -10,6 +10,7 @@ class CustomBox extends StatelessWidget {
   final double cornerRadius;
   final double topSkewFactor;
   final double bottomSkewFactor;
+  final VoidCallback? onTap;
   final Widget child;
 
   const CustomBox({
@@ -20,21 +21,36 @@ class CustomBox extends StatelessWidget {
     required this.topSkewFactor,
     required this.bottomSkewFactor,
     required this.child,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return CustomPaint(
-      painter: CustomboxBorderPainter(cornerRadius: cornerRadius,topSkewFactor: topSkewFactor, bottomSkewFactor: bottomSkewFactor),
+      painter: CustomboxBorderPainter(
+        cornerRadius: cornerRadius,
+        topSkewFactor: topSkewFactor,
+        bottomSkewFactor: bottomSkewFactor,
+      ),
       child: ClipPath(
-        clipper: CustomBoxClipper(cornerRadius: cornerRadius, topSkewFactor: topSkewFactor, bottomSkewFactor: bottomSkewFactor),
+        clipper: CustomBoxClipper(
+          cornerRadius: cornerRadius,
+          topSkewFactor: topSkewFactor,
+          bottomSkewFactor: bottomSkewFactor,
+        ),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-          child: Container(
-            width: width,
-            height: height,
-            padding: const EdgeInsets.all(12),
-            child: child,
+          child: Material(
+            color: Colors.transparent,
+            child: InkWell(
+              onTap: onTap,
+              child: Container(
+                width: width,
+                height: height,
+                padding: const EdgeInsets.all(12),
+                child: child,
+              ),
+            ),
           ),
         ),
       ),

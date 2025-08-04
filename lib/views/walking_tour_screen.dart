@@ -8,13 +8,8 @@ import 'package:time_trails/models/landmark.dart';
 
 class WalkingTourScreen extends StatefulWidget {
   final List<Landmark> landmarks;
-  final String googleApiKey;
 
-  const WalkingTourScreen({
-    required this.landmarks,
-    required this.googleApiKey,
-    super.key,
-  });
+  const WalkingTourScreen({required this.landmarks, super.key});
 
   @override
   State<WalkingTourScreen> createState() => _WalkingTourScreenState();
@@ -71,10 +66,12 @@ class _WalkingTourScreenState extends State<WalkingTourScreen> {
     final origin = '${userLocation!.latitude},${userLocation!.longitude}';
     final destination = '${landmark.latitude},${landmark.longitude}';
 
-    final url =
-        'https://maps.googleapis.com/maps/api/directions/json?origin=$origin&destination=$destination&mode=walking&key=${widget.googleApiKey}';
+    final response = await http.post(
+      Uri.parse('https://fetchroutetolandmark-ceqbukz3fa-uc.a.run.app'),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({'origin': origin, 'destination': destination}),
+    );
 
-    final response = await http.get(Uri.parse(url));
     final data = json.decode(response.body);
 
     if (data['status'] != 'OK') {

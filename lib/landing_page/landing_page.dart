@@ -130,7 +130,7 @@ class _LandingPageContentState extends State<LandingPageContent> {
                               ],
                             ),
                           ),
-                          const SizedBox(height: 20,),
+                          const SizedBox(height: 20),
                           StylizedText(
                             'Time Trails',
                             textAlignment: TextAlign.center,

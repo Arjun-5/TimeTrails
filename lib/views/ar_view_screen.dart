@@ -19,14 +19,12 @@ import 'package:vector_math/vector_math_64.dart' hide Colors;
 class ArViewScreen extends StatefulWidget {
   final String modelUrl;
   final Landmark? landmark;
-  final String? apiKey;
 
   const ArViewScreen({
     super.key,
     this.modelUrl =
         "https://modelviewer.dev/shared-assets/models/Astronaut.glb",
     this.landmark,
-    this.apiKey,
   });
 
   @override
@@ -45,7 +43,7 @@ class _ArViewScreenState extends State<ArViewScreen> {
   ImageProvider? snapshotImage;
 
   bool collected = false;
-  bool get badgeMode => widget.landmark != null && widget.apiKey != null;
+  bool get badgeMode => widget.landmark != null;// && widget.apiKey != null;
   String? get landmarkId => widget.landmark?.placeId;
 
   @override
@@ -226,9 +224,13 @@ class _ArViewScreenState extends State<ArViewScreen> {
   }
 
   Future<void> _onNodeTap(List<String> nodeNames) async {
+    debugPrint('Tapped nodes: $nodeNames');
     if (collected || modelNode == null) return;
+    final expectedName = widget.landmark?.placeId ?? "remoteModel";
 
-    if (nodeNames.contains(modelNode!.name)) {
+    debugPrint('Expected node name: $expectedName');
+    if (nodeNames.contains(expectedName)) {
+      debugPrint('Tapped the model node!');
       await _onBadgeModelTap();
     }
   }
@@ -241,11 +243,11 @@ class _ArViewScreenState extends State<ArViewScreen> {
     setState(() => isLoadingSnapshot = true);
 
     final node = ARNode(
+      name: widget.landmark?.placeId ?? "remoteModel",
       type: NodeType.webGLB,
       uri: widget.modelUrl,
-      scale: Vector3(5, 5, 5),
+      scale: Vector3(1, 1, 1),
       position: hit.worldTransform.getTranslation(),
-      rotation: Vector4(0.0, 1.0, 0.0, 3.14),
     );
 
     final bool? success = await arObjectManager.addNode(node);
@@ -271,10 +273,12 @@ class _ArViewScreenState extends State<ArViewScreen> {
   Future<void> _onBadgeModelTap() async {
     if (!badgeMode || collected || landmarkId == null) return;
 
+    final photoUrl = await widget.landmark!.getPhotoUrl();
+
     final badge = Badge(
       landmarkId: landmarkId!,
       name: widget.landmark!.name,
-      imageUrl: widget.landmark!.photoUrl(widget.apiKey ?? ''),
+      imageUrl: photoUrl,
       collectedAt: DateTime.now(),
     );
 
@@ -282,10 +286,10 @@ class _ArViewScreenState extends State<ArViewScreen> {
 
     setState(() => collected = true);
 
-    if(!mounted) {
+    if (!mounted) {
       return;
     }
-    
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(content: Text('🏅 Badge collected: ${widget.landmark!.name}')),
     );

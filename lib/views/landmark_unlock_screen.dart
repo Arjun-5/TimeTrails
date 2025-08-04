@@ -6,12 +6,10 @@ import 'package:time_trails/views/landmark_unlock_panel.dart';
 
 class LandmarkUnlockScreen extends StatefulWidget {
   final List<Landmark> landmarks;
-  final String apiKey;
 
   const LandmarkUnlockScreen({
     super.key,
     required this.landmarks,
-    required this.apiKey,
   });
 
   @override
@@ -51,7 +49,6 @@ class _LandmarkUnlockScreenState extends State<LandmarkUnlockScreen> {
       builder: (_) => LandmarkUnlockPanel(
         landmark: landmark,
         isNearby: isNearby,
-        apiKey: widget.apiKey,
       ),
     );
   }

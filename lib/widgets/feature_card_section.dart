@@ -6,21 +6,12 @@ import 'package:time_trails/widgets/feature_button.dart';
 
 class FeatureCardSection extends StatelessWidget {
   final LandmarkController landmarkController;
-  final String apiKey;
 
-  const FeatureCardSection({
-    super.key,
-    required this.landmarkController,
-    required this.apiKey,
-  });
+  const FeatureCardSection({super.key, required this.landmarkController});
 
   @override
   Widget build(BuildContext context) {
-    final List<Feature> features = getFeatureCards(
-      context,
-      landmarkController,
-      apiKey,
-    );
+    final List<Feature> features = getFeatureCards(context, landmarkController);
     final width = MediaQuery.of(context).size.width;
 
     return SizedBox(

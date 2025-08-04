@@ -1,6 +1,5 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:time_trails/Controller/landmark_controller.dart';
@@ -22,10 +21,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final LandmarkController _landmarkController = LandmarkController();
 
-  final String _apiKey = dotenv.env['GOOGLE_API_KEY']!;
-
   bool _isDataLoding = true;
-  //bool _isDataLoding = false;
 
   @override
   void initState() {
@@ -103,13 +99,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
                         ArFeatureCardSection(),
                         const SizedBox(height: 70),
-                        FeatureCardSection(landmarkController: _landmarkController,apiKey: _apiKey,),
+                        FeatureCardSection(
+                          landmarkController: _landmarkController,
+                        ),
                         const SizedBox(height: 24),
 
                         _isDataLoding
                             ? const Center(child: CircularProgressIndicator())
                             : LandmarkGrid(
-                                apiKey: _apiKey,
                                 landmarks: _landmarkController.landmarks,
                               ),
                       ],

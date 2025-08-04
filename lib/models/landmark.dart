@@ -1,3 +1,7 @@
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
+
 class Landmark {
   final String name;
   final double latitude;
@@ -23,6 +27,20 @@ class Landmark {
     );
   }
 
-  String photoUrl(String apiKey) =>
-      'https://places.googleapis.com/v1/$photoRef/media?maxHeightPx=400&key=$apiKey';
+  Future<String> getPhotoUrl() async {
+    final response = await http.post(
+      Uri.parse(
+        'https://getphotourl-ceqbukz3fa-uc.a.run.app',
+      ),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({'photoReference': photoRef}),
+    );
+
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      return data['url'];
+    } else {
+      throw Exception('Failed to fetch photo URL: ${response.body}');
+    }
+  }
 }

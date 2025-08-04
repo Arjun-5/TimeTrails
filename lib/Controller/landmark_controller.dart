@@ -23,15 +23,15 @@ class LandmarkController {
     final testLandmarks = [
       Landmark(
         name: 'Test Landmark 1',
-        latitude: 51.37764363920317, 
-        longitude: 12.405258737595004,
+        latitude: 51.37635579449376, 
+        longitude: 12.3971930606781,
         photoRef: '',
         placeId: 'Place1',
       ),
       Landmark(
         name: 'Test Landmark 2',
-        latitude: 51.37935367147786, 
-        longitude: 12.399205186749027,
+        latitude: 51.36408566582929, 
+        longitude: 12.400827051979984,
         photoRef: '',
         placeId: 'Test Place2',
       ),
@@ -48,14 +48,14 @@ class LandmarkController {
 
     landmarks = await Future.wait(
       combinedLandmarks.map((landmark) async {
-        final walking = await _distanceServices.getDistanceToLandmark(
+        final walking = await _distanceServices.calculateDistanceToLandmark(
           currentLatitude: userLatitude,
           currentLongitude: userLongitude,
           destinationLatitude: landmark.latitude,
           destinationLongitude: landmark.longitude,
         );
 
-        final driving = await _distanceServices.getDistanceToLandmark(
+        final driving = await _distanceServices.calculateDistanceToLandmark(
           currentLatitude: userLatitude,
           currentLongitude: userLongitude,
           destinationLatitude: landmark.latitude,

@@ -1,1 +1,45 @@
-{"flutter":{"platforms":{"android":{"default":{"projectId":"time-trails","appId":"1:713418360309:android:9a0109db9f499f3a9d8cbc","fileOutput":"android/app/google-services.json"}},"ios":{"default":{"projectId":"time-trails","appId":"1:713418360309:ios:da0307e2638719109d8cbc","uploadDebugSymbols":false,"fileOutput":"ios/Runner/GoogleService-Info.plist"}},"dart":{"lib/firebase_options.dart":{"projectId":"time-trails","configurations":{"android":"1:713418360309:android:9a0109db9f499f3a9d8cbc","ios":"1:713418360309:ios:da0307e2638719109d8cbc"}}}}}}
+{
+    "flutter": {
+        "platforms": {
+            "android": {
+                "default": {
+                    "projectId": "time-trails",
+                    "appId": "1:713418360309:android:74aa4c2cc7eee3af9d8cbc",
+                    "fileOutput": "android/app/google-services.json"
+                }
+            },
+            "ios": {
+                "default": {
+                    "projectId": "time-trails",
+                    "appId": "1:713418360309:ios:da0307e2638719109d8cbc",
+                    "uploadDebugSymbols": false,
+                    "fileOutput": "ios/Runner/GoogleService-Info.plist"
+                }
+            },
+            "dart": {
+                "lib/firebase_options.dart": {
+                    "projectId": "time-trails",
+                    "configurations": {
+                        "android": "1:713418360309:android:74aa4c2cc7eee3af9d8cbc"
+                    }
+                }
+            }
+        }
+    },
+    "functions": [
+        {
+            "source": "functions",
+            "codebase": "default",
+            "ignore": [
+                "node_modules",
+                ".git",
+                "firebase-debug.log",
+                "firebase-debug.*.log",
+                "*.local"
+            ],
+            "predeploy": [
+                "npm --prefix \"$RESOURCE_DIR\" run lint"
+            ]
+        }
+    ]
+}

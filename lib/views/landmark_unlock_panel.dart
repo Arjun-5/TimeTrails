@@ -6,13 +6,11 @@ import 'package:time_trails/views/ar_view_screen.dart';
 class LandmarkUnlockPanel extends StatefulWidget {
   final Landmark landmark;
   final bool isNearby;
-  final String apiKey;
 
   const LandmarkUnlockPanel({
     super.key,
     required this.landmark,
     required this.isNearby,
-    required this.apiKey,
   });
 
   @override
@@ -55,7 +53,6 @@ class _LandmarkUnlockPanelState extends State<LandmarkUnlockPanel> {
       MaterialPageRoute(
         builder: (_) => ArViewScreen(
           landmark: widget.landmark,
-          apiKey: widget.apiKey,
           modelUrl: _badgeModelUrl!,
         ),
       ),
