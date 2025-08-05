@@ -91,7 +91,7 @@ The 3D models are sourced from the [Leipzig Open Data 3D Stadtmodell](https://op
 - Google Maps SDK & Direction, Routes API  
 - Google Geocoding & Directions API  
 - Firebase Firestore, Storage & Firebase Functions  
-- ARKit (iOS) & ARCore (Android) via Flutter plugins  
+- ARCore (Android) via Flutter plugins  
 - 3D building models from Leipzig Open Data
 
 ---
