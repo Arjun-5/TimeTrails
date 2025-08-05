@@ -48,3 +48,4 @@ app.*.map.json
 /android/app/google-services.json
 /android/app/release-keystore.jks
 /lib/firebase_options.dart
+/ios/Runner/GoogleService-Info.plist
