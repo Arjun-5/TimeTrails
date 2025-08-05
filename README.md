@@ -93,6 +93,7 @@ The 3D models are sourced from the [Leipzig Open Data 3D Stadtmodell](https://op
 - Firebase Firestore, Storage & Firebase Functions  
 - ARCore (Android) via Flutter plugins  
 - 3D building models from Leipzig Open Data
+- App design inspired from Sourasith - <a href="https://www.figma.com/files/team/1293300015434248625/resources/community/file/1149336740234053658?fuid=1293300010491995496" target="_blank"> Online Bike Shopping App </a> and <a href="https://www.figma.com/files/team/1293300015434248625/resources/community/file/1076511483626225352?fuid=1293300010491995496"> Neon UI Design </a>
 
 ---
 
